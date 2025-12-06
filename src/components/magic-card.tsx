@@ -38,7 +38,7 @@ export function MagicCard({
   const style = {
     maskImage,
     WebkitMaskImage: maskImage,
-  } as React.CSSProperties;
+  } as unknown as React.CSSProperties;
 
   return (
     <div
