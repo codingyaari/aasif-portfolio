@@ -8,7 +8,7 @@ module.exports = {
       exec_mode: 'fork',
       env: {
         NODE_ENV: 'production',
-        PORT: 2027,
+        PORT: 2030,
       },
       // Load environment variables from .env.local file
       // Make sure to create .env.local with your variables
@@ -22,7 +22,7 @@ module.exports = {
       merge_logs: true,
       env_production: {
         NODE_ENV: 'production',
-        PORT: 2027,
+        PORT: 2030,
       },
     },
   ],
