@@ -1,0 +1,179 @@
+{
+  "personal": {
+    "image": "https://pbs.twimg.com/profile_images/1995857098111156226/C4j_Q6uR_400x400.jpg",
+    "name": "Aasif Khan",
+    "title": "Full Stack Developer (MERN/Next.js Specialist)",
+    "subtitle": "MERN Stack Developer & Software Engineer",
+    "description": "I craft beautiful, functional, and user-centered digital experiences. Passionate about clean code, modern design, and cutting-edge technologies.",
+    "objective": "Seeking a challenging Full Stack Developer role where I can apply my 4+ years of expertise in high-performance MERN/Next.js technologies, real-time systems (Socket.io), and AI integrations (OpenAI/LangChain) to drive innovation and organizational growth.",
+    "summary": "Highly experienced Full Stack Developer with 4+ years of hands-on experience in building and deploying scalable web applications. Strong command over the modern stack, including Next.js, React.js, Node.js, MongoDB, Redis, and Socket.io. Proficient in developing REST APIs with Express.js, managing state with Redux, and implementing advanced caching strategies and authentication flows (NextAuth). Skilled in integrating cutting-edge AI capabilities, including building OpenAI chatbots, implementing LangChain pipelines, and performing vector search for real-time, database-connected AI responses.",
+    "contact": {
+      "phone": "+91 7737704984",
+      "email": "codewithaasif@gmail.com",
+      "location": "Jaipur, India"
+    },
+    "social": {
+      "github": "https://github.com/codingyaari",
+      "linkedin": "https://www.linkedin.com/in/aasif-khan-465620211/",
+      "twitter": "https://x.com/codewithaasif"
+    },
+    "resume": "/resume.pdf",
+    "availability": "Available for new opportunities"
+  },
+  "skills": {
+    "frontend": [
+      { "name": "Next.js", "level": 95, "color": "from-gray-900 to-gray-700 dark:from-white dark:to-gray-300" },
+      { "name": "React.js", "level": 95, "color": "from-blue-500 to-cyan-500" },
+      { "name": "TypeScript", "level": 90, "color": "from-blue-600 to-blue-400" },
+      { "name": "Redux", "level": 88, "color": "from-purple-500 to-pink-500" },
+      { "name": "Fabric.js", "level": 85, "color": "from-orange-500 to-red-500" },
+      { "name": "CSS/UI/UX", "level": 92, "color": "from-cyan-500 to-teal-500" }
+    ],
+    "backend": [
+      { "name": "Node.js", "level": 95, "color": "from-green-600 to-green-400" },
+      { "name": "Express.js", "level": 93, "color": "from-gray-800 to-gray-600" },
+      { "name": "REST API", "level": 95, "color": "from-purple-500 to-pink-500" },
+      { "name": "MVC Architecture", "level": 90, "color": "from-indigo-500 to-purple-500" },
+      { "name": "Design Patterns", "level": 88, "color": "from-blue-500 to-cyan-500" }
+    ],
+    "databases": [
+      { "name": "MongoDB", "level": 95, "color": "from-green-500 to-emerald-500" },
+      { "name": "MySQL", "level": 85, "color": "from-blue-600 to-cyan-500" },
+      { "name": "Redis", "level": 90, "color": "from-red-500 to-orange-500" },
+      { "name": "API Optimization", "level": 92, "color": "from-purple-500 to-pink-500" },
+      { "name": "Rate Limiting", "level": 88, "color": "from-yellow-500 to-orange-500" }
+    ],
+    "realtime": [
+      { "name": "Socket.io", "level": 95, "color": "from-blue-500 to-cyan-500" },
+      { "name": "WebSockets", "level": 93, "color": "from-purple-500 to-pink-500" },
+      { "name": "BullMQ", "level": 85, "color": "from-green-500 to-emerald-500" },
+      { "name": "FCM", "level": 88, "color": "from-orange-500 to-red-500" }
+    ],
+    "cloud": [
+      { "name": "AWS EC2", "level": 90, "color": "from-orange-500 to-yellow-500" },
+      { "name": "AWS S3", "level": 92, "color": "from-blue-500 to-cyan-500" },
+      { "name": "CloudFront", "level": 88, "color": "from-purple-500 to-pink-500" },
+      { "name": "Git", "level": 95, "color": "from-orange-600 to-red-500" }
+    ],
+    "ai": [
+      { "name": "OpenAI", "level": 90, "color": "from-green-500 to-emerald-500" },
+      { "name": "LangChain", "level": 88, "color": "from-blue-500 to-cyan-500" },
+      { "name": "Vector Search", "level": 85, "color": "from-purple-500 to-pink-500" },
+      { "name": "AI Integration", "level": 90, "color": "from-orange-500 to-red-500" }
+    ],
+    "auth": [
+      { "name": "NextAuth", "level": 95, "color": "from-blue-500 to-cyan-500" },
+      { "name": "Secure Sessions", "level": 92, "color": "from-green-500 to-emerald-500" },
+      { "name": "Token Validation", "level": 90, "color": "from-purple-500 to-pink-500" }
+    ]
+  },
+  "experience": [
+    {
+      "company": "Octal IT Solution",
+      "position": "Full Stack (MERN) Developer",
+      "location": "Onsite",
+      "startDate": "January 2022",
+      "endDate": "Present",
+      "description": [
+        "Successfully managed the end-to-end development lifecycle including frontend, backend, architecture, optimization, and deployment",
+        "Implemented Redis caching and rate-limiting across multiple projects to ensure high-performance and scalable REST APIs",
+        "Managed cloud infrastructure, utilizing AWS EC2, S3, and CloudFront for efficient deployment, asset acceleration, and high availability",
+        "Coordinated with Project Managers (PM) for milestones, progress tracking, and release planning"
+      ],
+      "technologies": ["Next.js", "React.js", "Node.js", "MongoDB", "Redis", "AWS", "Socket.io", "NextAuth"],
+      "gradient": "from-blue-500/10 to-cyan-500/10"
+    }
+  ],
+  "projects": [
+    {
+      "title": "SunlakeCards.com",
+      "subtitle": "Online Design Editor",
+      "description": "Built a real-time, interactive design editor with drag-and-drop, layers, and text tools using Fabric.js. Integrated OpenAI + LangChain to create an in-platform chatbot, delivering real-time content suggestions to users. Used BullMQ + Redis for background tasks to maintain a seamless editing experience.",
+      "technologies": ["Next.js", "Node.js", "MongoDB", "Fabric.js", "Redis", "BullMQ", "NextAuth", "OpenAI", "LangChain"],
+      "github": "https://github.com",
+      "live": "https://sunlakecards.com",
+      "featured": true,
+      "gradient": "from-blue-500/20 to-cyan-500/20",
+      "highlights": [
+        "Real-time interactive design editor",
+        "AI-powered chatbot with LangChain",
+        "Background job processing with BullMQ",
+        "Secure authentication with NextAuth"
+      ]
+    },
+    {
+      "title": "ZoomDrinks Delivery",
+      "subtitle": "Real-Time E-commerce Platform",
+      "description": "Developed a drinks delivery platform featuring real-time order tracking using Socket.io (WebSockets). Utilized Redis caching for high-performance product and order APIs, and integrated CloudFront for asset acceleration. Implemented push notifications via FCM.",
+      "technologies": ["Next.js", "Node.js", "MongoDB", "Redis", "Socket.io", "FCM", "AWS S3", "CloudFront"],
+      "github": "https://github.com",
+      "live": "https://zoomdrinksdelivery.com",
+      "featured": true,
+      "gradient": "from-purple-500/20 to-pink-500/20",
+      "highlights": [
+        "Real-time order tracking with Socket.io",
+        "High-performance Redis caching",
+        "CloudFront CDN integration",
+        "Push notifications with FCM"
+      ]
+    },
+    {
+      "title": "UltraFair",
+      "subtitle": "Fantasy Cricket Platform",
+      "description": "Built a fantasy gaming platform (similar to Dream11) supporting team creation, contests, and wallet transactions. Powered real-time score updates, contest events, and dynamic leaderboards using Socket.io. Implemented role-based access and wallet transaction validations.",
+      "technologies": ["React.js", "Node.js", "MongoDB", "Redis", "Socket.io", "FCM"],
+      "github": "https://github.com",
+      "live": "https://example.com",
+      "featured": false,
+      "gradient": "from-orange-500/20 to-red-500/20",
+      "highlights": [
+        "Real-time score updates",
+        "Dynamic leaderboards",
+        "Wallet transaction system",
+        "Role-based access control"
+      ]
+    },
+    {
+      "title": "IChaty",
+      "subtitle": "Real-Time Chat Application",
+      "description": "Developed a web-based, WhatsApp-like chat application with QR-based login, real-time messaging, group chats, broadcast messages, and status updates. Built responsive chat UI with real-time message updates using Socket.io and managed chat histories efficiently using Redux.",
+      "technologies": ["Next.js", "Socket.io", "Redux", "MongoDB", "MySQL"],
+      "github": "https://github.com",
+      "live": "https://example.com",
+      "featured": false,
+      "gradient": "from-green-500/20 to-emerald-500/20",
+      "highlights": [
+        "QR-based authentication",
+        "Real-time messaging",
+        "Group chats & broadcast",
+        "Status updates"
+      ]
+    }
+  ],
+  "education": {
+    "degree": "Bachelor of Computer Applications (BCA)",
+    "institution": "CIITM College, Jaipur",
+    "year": "2016"
+  },
+  "features": [
+    {
+      "icon": "Code",
+      "title": "Clean Code",
+      "description": "Writing maintainable and scalable code following best practices and design patterns.",
+      "gradient": "from-blue-500 to-cyan-500"
+    },
+    {
+      "icon": "Rocket",
+      "title": "Performance",
+      "description": "Building fast, optimized applications with Redis caching, API optimization, and CDN integration.",
+      "gradient": "from-purple-500 to-pink-500"
+    },
+    {
+      "icon": "Coffee",
+      "title": "Problem Solving",
+      "description": "Turning complex challenges into elegant solutions with real-time systems and AI integration.",
+      "gradient": "from-orange-500 to-red-500"
+    }
+  ]
+}
+
