@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { useRef, useState, useEffect } from "react";
-import { Code, Coffee, Rocket, Sparkles, Brain } from "lucide-react";
+import { Code, Coffee, Rocket, Sparkles, Brain, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import portfolioData from "@/data/portfolio";
 import { MagicCard } from "./magic-card";
@@ -16,7 +16,32 @@ const iconMap: Record<string, typeof Code> = {
 export function About() {
   const { personal, features } = portfolioData;
   const ref = useRef<HTMLElement>(null);
+  const previewRef = useRef<HTMLParagraphElement>(null);
+  const fullRef = useRef<HTMLParagraphElement>(null);
   const [isInView, setIsInView] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [height, setHeight] = useState<number>(0);
+  
+  // Split summary into preview and full text
+  const summaryPreview = personal.summary.split(".").slice(0, 2).join(".") + ".";
+  const summaryFull = personal.summary;
+
+  // Measure and set height based on expanded state
+  useEffect(() => {
+    const measureHeight = () => {
+      if (isExpanded && fullRef.current) {
+        const buttonHeight = 32; // Approximate button height
+        setHeight(fullRef.current.scrollHeight + buttonHeight + 16); // 16 for mb-4
+      } else if (!isExpanded && previewRef.current) {
+        const buttonHeight = 32;
+        setHeight(previewRef.current.scrollHeight + buttonHeight + 16);
+      }
+    };
+
+    // Small delay to ensure DOM is updated
+    const timeout = setTimeout(measureHeight, 10);
+    return () => clearTimeout(timeout);
+  }, [isExpanded]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -126,13 +151,74 @@ export function About() {
         >
           <MagicCard
             gradientColor="rgba(99, 102, 241, 0.2)"
-            className="p-6 sm:p-8 md:p-12 max-w-5xl mx-auto border border-indigo-500/20 bg-card/80 dark:bg-slate-900/50 backdrop-blur-sm"
+            className="p-4 sm:p-6 md:p-8 lg:p-12 max-w-5xl mx-auto border border-indigo-500/20 bg-card/80 dark:bg-slate-900/50 backdrop-blur-sm"
           >
             <div className="relative z-10">
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-indigo-400 to-transparent" />
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-foreground mb-4 font-light">
-                {personal.summary}
-              </p>
+              
+              {/* Desktop: Always show full text */}
+              <div className="hidden md:block">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-foreground font-light">
+                  {summaryFull}
+                </p>
+              </div>
+
+              {/* Mobile: Expandable card */}
+              <div className="md:hidden">
+                <motion.div
+                  animate={{
+                    height: height || "auto",
+                  }}
+                  transition={{ 
+                    duration: 0.5, 
+                    ease: [0.4, 0, 0.2, 1] 
+                  }}
+                  className="overflow-hidden"
+                >
+                  {!isExpanded ? (
+                    <>
+                      <p 
+                        ref={previewRef}
+                        className="text-sm leading-relaxed text-foreground font-light mb-4 line-clamp-4"
+                      >
+                        {summaryPreview}
+                      </p>
+                      <motion.button
+                        onClick={() => setIsExpanded(true)}
+                        className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors font-semibold text-sm"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <span>Read More</span>
+                        <ChevronDown className="h-4 w-4" />
+                      </motion.button>
+                    </>
+                  ) : (
+                    <>
+                      <p 
+                        ref={fullRef}
+                        className="text-sm leading-relaxed text-foreground font-light mb-4"
+                      >
+                        {summaryFull}
+                      </p>
+                      <motion.button
+                        onClick={() => setIsExpanded(false)}
+                        className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors font-semibold text-sm"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <span>Show Less</span>
+                        <motion.div
+                          animate={{ rotate: 180 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                          <ChevronDown className="h-4 w-4" />
+                        </motion.div>
+                      </motion.button>
+                    </>
+                  )}
+                </motion.div>
+              </div>
             </div>
           </MagicCard>
         </motion.div>

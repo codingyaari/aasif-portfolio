@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { GradientOrbs } from "@/components/gradient-orbs";
+import portfolioData from "@/data/portfolio.json";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,9 +17,70 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const personal = portfolioData.personal;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://aasif.codingyari.com/";
+
 export const metadata: Metadata = {
-  title: "Aasif Khan | Full Stack Developer (MERN/Next.js Specialist)",
-  description: "I craft beautiful, functional, and user-centered digital experiences. Passionate about clean code, modern design, and cutting-edge technologies.",
+  title: `Hi, I'm ${personal.name} - ${personal.title}`,
+  description: personal.description,
+  keywords: [
+    "Aasif Khan",
+    "Full Stack Developer",
+    "MERN Stack",
+    "Next.js Developer",
+    "React Developer",
+    "Node.js Developer",
+    "Web Developer",
+    "Software Engineer",
+    "Portfolio",
+    personal.title,
+  ],
+  authors: [{ name: personal.name, url: personal.social.linkedin }],
+  creator: personal.name,
+  publisher: personal.name,
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    title: `Hi, I'm ${personal.name} - ${personal.title}`,
+    description: personal.description,
+    siteName: `${personal.name}'s Portfolio`,
+    images: [
+      {
+        url: personal.image,
+        width: 1200,
+        height: 1200,
+        alt: `${personal.name} - ${personal.title}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Hi, I'm ${personal.name} - ${personal.title}`,
+    description: personal.description,
+    images: [personal.image],
+    creator: personal.social.twitter ? `@${personal.social.twitter.split("/").pop()}` : undefined,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: personal.image,
+    shortcut: personal.image,
+    apple: personal.image,
+  },
 };
 
 export default function RootLayout({

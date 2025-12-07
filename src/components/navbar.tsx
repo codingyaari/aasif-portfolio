@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { ThemeToggle } from "./theme-toggle";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import portfolioData from "@/data/portfolio";
 import { Sparkles } from "lucide-react";
+import { useScrollProfile } from "@/hooks/use-scroll-profile";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -20,6 +21,7 @@ export function Navbar() {
   const { personal } = portfolioData;
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const { showNavbarImage } = useScrollProfile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,19 +79,70 @@ export function Navbar() {
           <motion.a
             href="#home"
             onClick={(e) => handleNavClick(e, "#home")}
-            className="flex items-center gap-2 text-2xl font-black cursor-pointer"
+            className="flex items-center gap-2 sm:gap-3 text-2xl font-black cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            <AnimatePresence mode="wait">
+              {showNavbarImage ? (
+                <motion.div
+                  key="profile-image"
+                  initial={{ scale: 0, opacity: 0, x: -20 }}
+                  animate={{ scale: 1, opacity: 1, x: 0 }}
+                  exit={{ scale: 0, opacity: 0, x: -20 }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 300, 
+                    damping: 25,
+                    duration: 0.5 
+                  }}
+                  className="relative"
+                >
+                  <div className="relative rounded-full p-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+                    <div className="rounded-full overflow-hidden border-2 border-background dark:border-slate-900 bg-background dark:bg-slate-900">
+                      <img
+                        src={personal.image}
+                        alt={personal.name}
+                        className="w-10 h-10 sm:w-12 sm:h-12 object-cover"
+                      />
+                    </div>
+                  </div>
+                  <motion.div
+                    className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-500 border-2 border-background dark:border-slate-900"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="sparkles-icon"
+                  initial={{ scale: 0, opacity: 0, rotate: -180 }}
+                  animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                  exit={{ scale: 0, opacity: 0, rotate: 180 }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 300, 
+                    damping: 25,
+                    duration: 0.5 
+                  }}
+                >
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Sparkles className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <motion.span 
+              className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
             >
-              <Sparkles className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
-            </motion.div>
-            <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               {personal.name.split(" ")[0]}
-            </span>
+            </motion.span>
           </motion.a>
 
           <div className="hidden md:flex items-center gap-1">

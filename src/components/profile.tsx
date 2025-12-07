@@ -8,24 +8,25 @@ import { cn } from "@/lib/utils";
 import { getSocialIcon } from "@/lib/icons";
 import { GradientOrbs } from "./gradient-orbs";
 import portfolioData from "@/data/portfolio";
+import PixelTransition from './PixelTransition';
+
 
 export function Profile() {
   const { resolvedTheme } = useTheme();
   const { personal } = portfolioData;
   const [mounted, setMounted] = useState(false);
-  
+
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   const isDarkMode = mounted && resolvedTheme === "dark";
 
   return (
     <section
       id="home"
-      className="relative min-h-[80vh] sm:min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-12 sm:pb-16 overflow-hidden scroll-mt-20"
+      className="relative min-h-[80vh] sm:min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 sm:pt-20 pb-12 sm:pb-16 overflow-hidden scroll-mt-20"
     >
-
       {/* Subtle Gradient Orbs */}
       <GradientOrbs />
 
@@ -58,17 +59,40 @@ export function Profile() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="rounded-full overflow-hidden border-4 border-slate-900 bg-slate-900">
-                  <img
+                <div className="rounded-full overflow-hidden border-4 border-slate-900 bg-slate-900 w-24 h-24 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-72 lg:h-72">
+                  <PixelTransition
+                    firstContent={
+                      <img
+                        src={personal.image}
+                        alt={personal.name}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        className="w-full h-full object-cover"
+                      />
+                    }
+                    secondContent={
+                      <img
+                        src={'https://pbs.twimg.com/media/G6ko-Y8bwAAvWhK?format=jpg&name=small'}
+                        alt={personal.name}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        className="w-full h-full object-cover"
+                      />
+                    }
+                    gridSize={12}
+                    pixelColor='#ffffff'
+                    once={false}
+                    animationStepDuration={0.4}
+                    className="custom-pixel-card w-full h-full"
+                  />
+                  {/* <img
                     src={personal.image}
                     alt={personal.name}
                     className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 object-cover"
-                  />
+                  /> */}
                 </div>
               </motion.div>
               {/* Status Indicator */}
               <motion.div
-                className="absolute bottom-4 right-4 w-6 h-6 rounded-full bg-green-500 border-4 border-slate-900 shadow-lg"
+                className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-green-500 border-2 sm:border-4 border-slate-900 shadow-lg"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
@@ -214,8 +238,8 @@ export function Profile() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <div style={{ color: iconColor }} className="flex items-center justify-center">
-                      <SocialIcon 
-                        className="text-xl transition-colors" 
+                      <SocialIcon
+                        className="text-xl transition-colors"
                         style={{ color: 'currentColor', fill: 'currentColor', stroke: 'currentColor' }}
                       />
                     </div>
@@ -226,8 +250,8 @@ export function Profile() {
           </motion.div>
         </div>
 
-       
-        
+
+
       </div>
     </section>
   );

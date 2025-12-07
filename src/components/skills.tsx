@@ -107,25 +107,51 @@ export function Skills() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8"
+          className="mb-6 sm:mb-8"
         >
-          {categories.map((category) => (
-            <motion.button
-              key={category.key}
-              onClick={() => setActiveCategory(category.key)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={cn(
-                "px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded-lg font-bold text-xs sm:text-sm md:text-base transition-all duration-300",
-                "border-2 backdrop-blur-sm",
-                activeCategory === category.key
-                  ? "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white border-indigo-400/50 shadow-lg shadow-indigo-500/30"
-                  : "bg-background/80 dark:bg-slate-900/50 text-foreground dark:text-slate-300 border-indigo-500/30 hover:border-indigo-400/50 hover:bg-muted/50 dark:hover:bg-slate-800/70"
-              )}
-            >
-              {category.label}
-            </motion.button>
-          ))}
+          {/* Mobile: Horizontal scrollable */}
+          <div className="md:hidden overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+            <div className="flex gap-2 justify-start min-w-max">
+              {categories.map((category) => (
+                <motion.button
+                  key={category.key}
+                  onClick={() => setActiveCategory(category.key)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={cn(
+                    "px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 whitespace-nowrap flex-shrink-0",
+                    "border-2 backdrop-blur-sm",
+                    activeCategory === category.key
+                      ? "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white border-indigo-400/50 shadow-lg shadow-indigo-500/30"
+                      : "bg-background/80 dark:bg-slate-900/50 text-foreground dark:text-slate-300 border-indigo-500/30 hover:border-indigo-400/50 hover:bg-muted/50 dark:hover:bg-slate-800/70"
+                  )}
+                >
+                  {category.label}
+                </motion.button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Desktop: Centered wrap */}
+          <div className="hidden md:flex flex-wrap justify-center gap-3">
+            {categories.map((category) => (
+              <motion.button
+                key={category.key}
+                onClick={() => setActiveCategory(category.key)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  "px-6 py-3 rounded-lg font-bold text-base transition-all duration-300",
+                  "border-2 backdrop-blur-sm",
+                  activeCategory === category.key
+                    ? "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white border-indigo-400/50 shadow-lg shadow-indigo-500/30"
+                    : "bg-background/80 dark:bg-slate-900/50 text-foreground dark:text-slate-300 border-indigo-500/30 hover:border-indigo-400/50 hover:bg-muted/50 dark:hover:bg-slate-800/70"
+                )}
+              >
+                {category.label}
+              </motion.button>
+            ))}
+          </div>
         </motion.div>
 
         {/* Skills Grid */}
@@ -134,68 +160,136 @@ export function Skills() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-2 sm:gap-3"
         >
-          {filteredSkills.map((skill, index) => {
-            const { icon: Icon, color: iconColor } = getTechnologyIcon(skill.name, isDarkMode);
+          {/* Mobile: Scrollable grid with max 3 rows */}
+          <div className="md:hidden overflow-y-auto max-h-[280px] scrollbar-thin scrollbar-thumb-indigo-500/30 scrollbar-track-transparent">
+            <div className="grid grid-cols-3 gap-2 pb-2">
+              {filteredSkills.map((skill, index) => {
+                const { icon: Icon, color: iconColor } = getTechnologyIcon(skill.name, isDarkMode);
 
-            return (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                transition={{
-                  delay: index * 0.02,
-                  duration: 0.4,
-                  type: "spring",
-                  stiffness: 200,
-                }}
-                whileHover={{ scale: 1.1, y: -4 }}
-                className={cn(
-                  "group relative p-2 sm:p-3 rounded-lg border border-border dark:border-slate-700/50",
-                  "bg-card/50 dark:bg-slate-900/50 backdrop-blur-sm",
-                  "hover:border-indigo-500/50 hover:bg-muted/50 dark:hover:bg-slate-800/70",
-                  "transition-all duration-300 cursor-pointer",
-                  "flex flex-col items-center justify-center gap-1 sm:gap-2",
-                  "hover:shadow-xl hover:shadow-indigo-500/20"
-                )}
-              >
-                {/* Icon with colorful background */}
-                <motion.div
-                  className="relative"
-                  whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div
-                    className="p-1.5 sm:p-2 rounded-lg"
-                    style={{
-                      backgroundColor: `${iconColor}15`,
-                      border: `2px solid ${iconColor}40`,
-                    }}
-                  >
-                    <div style={{ color: iconColor }} className="flex items-center justify-center">
-                      <Icon
-                        className="text-lg sm:text-xl md:text-2xl"
-                        style={{ color: 'currentColor', fill: 'currentColor', stroke: 'currentColor' }}
-                      />
-                    </div>
-                  </div>
-                  {/* Glow effect on hover */}
+                return (
                   <motion.div
-                    className="absolute inset-0 rounded-lg blur-lg opacity-0 group-hover:opacity-40 transition-opacity"
-                    style={{ backgroundColor: iconColor }}
-                  />
-                </motion.div>
+                    key={skill.name}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                    transition={{
+                      delay: index * 0.02,
+                      duration: 0.4,
+                      type: "spring",
+                      stiffness: 200,
+                    }}
+                    whileHover={{ scale: 1.1, y: -4 }}
+                    className={cn(
+                      "group relative p-2 rounded-lg border border-border dark:border-slate-700/50",
+                      "bg-card/50 dark:bg-slate-900/50 backdrop-blur-sm",
+                      "hover:border-indigo-500/50 hover:bg-muted/50 dark:hover:bg-slate-800/70",
+                      "transition-all duration-300 cursor-pointer",
+                      "flex flex-col items-center justify-center gap-1",
+                      "hover:shadow-xl hover:shadow-indigo-500/20"
+                    )}
+                  >
+                    {/* Icon with colorful background */}
+                    <motion.div
+                      className="relative"
+                      whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <div
+                        className="p-1.5 rounded-lg"
+                        style={{
+                          backgroundColor: `${iconColor}15`,
+                          border: `2px solid ${iconColor}40`,
+                        }}
+                      >
+                        <div style={{ color: iconColor }} className="flex items-center justify-center">
+                          <Icon
+                            className="text-lg"
+                            style={{ color: 'currentColor', fill: 'currentColor', stroke: 'currentColor' }}
+                          />
+                        </div>
+                      </div>
+                      {/* Glow effect on hover */}
+                      <motion.div
+                        className="absolute inset-0 rounded-lg blur-lg opacity-0 group-hover:opacity-40 transition-opacity"
+                        style={{ backgroundColor: iconColor }}
+                      />
+                    </motion.div>
 
-                {/* Skill Name */}
-                <div className="text-center">
-                  <span className="text-[10px] sm:text-xs font-bold text-foreground dark:text-slate-200 leading-tight block">
-                    {skill.name}
-                  </span>
-                </div>
-              </motion.div>
-            );
-          })}
+                    {/* Skill Name */}
+                    <div className="text-center">
+                      <span className="text-[10px] font-bold text-foreground dark:text-slate-200 leading-tight block">
+                        {skill.name}
+                      </span>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Desktop: Full grid */}
+          <div className="hidden md:grid grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
+            {filteredSkills.map((skill, index) => {
+              const { icon: Icon, color: iconColor } = getTechnologyIcon(skill.name, isDarkMode);
+
+              return (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                  transition={{
+                    delay: index * 0.02,
+                    duration: 0.4,
+                    type: "spring",
+                    stiffness: 200,
+                  }}
+                  whileHover={{ scale: 1.1, y: -4 }}
+                  className={cn(
+                    "group relative p-3 rounded-lg border border-border dark:border-slate-700/50",
+                    "bg-card/50 dark:bg-slate-900/50 backdrop-blur-sm",
+                    "hover:border-indigo-500/50 hover:bg-muted/50 dark:hover:bg-slate-800/70",
+                    "transition-all duration-300 cursor-pointer",
+                    "flex flex-col items-center justify-center gap-2",
+                    "hover:shadow-xl hover:shadow-indigo-500/20"
+                  )}
+                >
+                  {/* Icon with colorful background */}
+                  <motion.div
+                    className="relative"
+                    whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div
+                      className="p-2 rounded-lg"
+                      style={{
+                        backgroundColor: `${iconColor}15`,
+                        border: `2px solid ${iconColor}40`,
+                      }}
+                    >
+                      <div style={{ color: iconColor }} className="flex items-center justify-center">
+                        <Icon
+                          className="text-xl md:text-2xl"
+                          style={{ color: 'currentColor', fill: 'currentColor', stroke: 'currentColor' }}
+                        />
+                      </div>
+                    </div>
+                    {/* Glow effect on hover */}
+                    <motion.div
+                      className="absolute inset-0 rounded-lg blur-lg opacity-0 group-hover:opacity-40 transition-opacity"
+                      style={{ backgroundColor: iconColor }}
+                    />
+                  </motion.div>
+
+                  {/* Skill Name */}
+                  <div className="text-center">
+                    <span className="text-xs font-bold text-foreground dark:text-slate-200 leading-tight block">
+                      {skill.name}
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </motion.div>
       </div>
       {/* <GradientOrbs /> */}

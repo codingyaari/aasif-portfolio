@@ -3,11 +3,12 @@
 import { motion } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Calendar, MapPin, Briefcase, Sparkles, CheckCircle2 } from "lucide-react";
+import { Calendar, MapPin, Briefcase, Sparkles, CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getTechnologyIcon } from "@/lib/icons";
 import portfolioData from "@/data/portfolio";
 import { MagicCard } from "./magic-card";
+import { ExprienceTech } from "./ExprienceTech";
 
 export function Experience() {
   const { resolvedTheme } = useTheme();
@@ -15,13 +16,21 @@ export function Experience() {
   const ref = useRef<HTMLElement>(null);
   const [isInView, setIsInView] = useState(false);
   const [mounted, setMounted] = useState(false);
-  
+  const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
+
   // Ensure theme is detected after hydration
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   const isDarkMode = mounted && resolvedTheme === "dark";
+
+  const toggleExpanded = (index: number) => {
+    setExpandedItems(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,10 +56,11 @@ export function Experience() {
   return (
     <section
       id="experience"
-      className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden scroll-mt-20"
+      className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20"
       ref={ref}
     >
-      
+
+
       <div className="container mx-auto max-w-6xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -90,103 +100,152 @@ export function Experience() {
             >
               <MagicCard
                 gradientColor="rgba(99, 102, 241, 0.2)"
-                className="p-4 sm:p-6 md:p-8 lg:p-12 border border-indigo-500/20 bg-card/80 dark:bg-slate-900/50 backdrop-blur-sm hover:border-indigo-400/40 transition-all duration-300"
+                className="p-3 sm:p-4 md:p-6 lg:p-8 xl:p-12 border border-indigo-500/20 bg-card/80 dark:bg-slate-900/50 backdrop-blur-sm hover:border-indigo-400/40 transition-all duration-300"
               >
                 <div className="relative z-10">
                   {/* Header Section */}
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 sm:gap-6 mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-indigo-500/20">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 sm:gap-4 md:gap-6 mb-3 sm:mb-4 md:mb-6 pb-3 sm:pb-4 md:pb-6 border-b border-indigo-500/20">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                        <div className="p-2 sm:p-3 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-400/30">
-                          <Briefcase className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-indigo-600 dark:text-indigo-400" />
+                      <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+                        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-400/30">
+                          <Briefcase className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-indigo-600 dark:text-indigo-400" />
                         </div>
                         <div>
-                          <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-foreground dark:text-slate-200 mb-1 sm:mb-2">
+                          <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-black text-foreground dark:text-slate-200 mb-0.5 sm:mb-1">
                             {exp.position}
                           </h3>
-                          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-indigo-600 dark:text-indigo-400 font-bold">
+                          <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-indigo-600 dark:text-indigo-400 font-bold">
                             {exp.company}
                           </p>
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Date and Location */}
-                    <div className="flex flex-col gap-2 sm:gap-3 md:items-end md:text-right">
-                      <div className="flex items-center gap-2 text-muted-foreground dark:text-slate-400">
-                        <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
-                        <span className="font-semibold text-sm sm:text-base md:text-lg">
+                    <div className="flex flex-col gap-1.5 sm:gap-2 md:gap-3 md:items-end md:text-right">
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-muted-foreground dark:text-slate-400">
+                        <Calendar className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
+                        <span className="font-semibold text-xs sm:text-sm md:text-base lg:text-lg">
                           {exp.startDate} - {exp.endDate}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 text-muted-foreground dark:text-slate-400">
-                        <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
-                        <span className="font-semibold text-sm sm:text-base md:text-lg">{exp.location}</span>
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-muted-foreground dark:text-slate-400">
+                        <MapPin className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
+                        <span className="font-semibold text-xs sm:text-sm md:text-base lg:text-lg">{exp.location}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Description Points */}
-                  <div className="mb-8">
-                    <h4 className="text-lg font-bold text-foreground dark:text-slate-300 mb-6 flex items-center gap-2">
-                      <div className="h-1 w-8 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 rounded-full" />
-                      Key Achievements
-                    </h4>
-                    <ul className="space-y-4">
-                      {exp.description.map((item, itemIndex) => (
-                        <motion.li
-                          key={itemIndex}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={
-                            isInView
-                              ? { opacity: 1, x: 0 }
-                              : { opacity: 0, x: -20 }
-                          }
-                          transition={{
-                            delay: index * 0.15 + itemIndex * 0.08,
-                            duration: 0.5,
-                          }}
-                          className="flex items-start gap-4 group"
+                  <div className="mb-4 sm:mb-6 md:mb-8">
+                    {/* Desktop: Always show heading and content */}
+                    <div className="hidden md:block">
+                      <h4 className="text-lg font-bold text-foreground dark:text-slate-300 mb-6 flex items-center gap-2">
+                        <div className="h-1 w-8 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 rounded-full" />
+                        Key Achievements
+                      </h4>
+                      <ul className="space-y-4">
+                        {exp.description.map((item, itemIndex) => (
+                          <motion.li
+                            key={itemIndex}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={
+                              isInView
+                                ? { opacity: 1, x: 0 }
+                                : { opacity: 0, x: -20 }
+                            }
+                            transition={{
+                              delay: index * 0.15 + itemIndex * 0.08,
+                              duration: 0.5,
+                            }}
+                            className="flex items-start gap-4 group"
+                          >
+                            <div className="mt-1 flex-shrink-0">
+                              <CheckCircle2 className="h-5 w-5 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-300 transition-colors" />
+                            </div>
+                            <p className="text-foreground/90 dark:text-slate-300 leading-relaxed text-base md:text-lg font-medium flex-1">
+                              {item}
+                            </p>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Mobile: Expandable with hidden heading when collapsed */}
+                    <div className="md:hidden">
+                      <motion.div
+                        animate={{
+                          maxHeight: expandedItems[index] ? "2000px" : "0px",
+                          opacity: expandedItems[index] ? 1 : 0,
+                        }}
+                        transition={{
+                          duration: 0.5,
+                          ease: [0.4, 0, 0.2, 1]
+                        }}
+                        className="overflow-hidden"
+                      >
+                        <h4 className="text-base font-bold text-foreground dark:text-slate-300 mb-4 flex items-center gap-2">
+                          <div className="h-1 w-6 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 rounded-full" />
+                          Key Achievements
+                        </h4>
+                        <ul className="space-y-3 pb-2">
+                          {exp.description.map((item, itemIndex) => (
+                            <motion.li
+                              key={itemIndex}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={
+                                expandedItems[index]
+                                  ? { opacity: 1, x: 0 }
+                                  : { opacity: 0, x: -20 }
+                              }
+                              transition={{
+                                delay: itemIndex * 0.05,
+                                duration: 0.4,
+                              }}
+                              className="flex items-start gap-3 group"
+                            >
+                              <div className="mt-0.5 flex-shrink-0">
+                                <CheckCircle2 className="h-4 w-4 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-300 transition-colors" />
+                              </div>
+                              <p className="text-foreground/90 dark:text-slate-300 leading-relaxed text-sm font-medium flex-1">
+                                {item}
+                              </p>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </motion.div>
+
+                      <motion.button
+                        onClick={() => toggleExpanded(index)}
+                        className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors font-semibold text-xs mt-3"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <span>{expandedItems[index] ? "Show Less" : "See More"}</span>
+                        <motion.div
+                          animate={{ rotate: expandedItems[index] ? 180 : 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
                         >
-                          <div className="mt-1 flex-shrink-0">
-                            <CheckCircle2 className="h-5 w-5 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-300 transition-colors" />
-                          </div>
-                          <p className="text-foreground/90 dark:text-slate-300 leading-relaxed text-base md:text-lg font-medium flex-1">
-                            {item}
-                          </p>
-                        </motion.li>
-                      ))}
-                    </ul>
+                          <ChevronDown className="h-3 w-3" />
+                        </motion.div>
+                      </motion.button>
+                    </div>
                   </div>
 
                   {/* Technologies */}
-                  <div>
-                    <h4 className="text-lg font-bold text-foreground dark:text-slate-300 mb-4 flex items-center gap-2">
-                      <div className="h-1 w-8 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 rounded-full" />
+                  <div className="w-full">
+                    <h4 className="text-base sm:text-lg font-bold text-foreground dark:text-slate-300 mb-3 sm:mb-4 flex items-center gap-2">
+                      <div className="h-1 w-6 sm:w-8 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 rounded-full" />
                       Technologies Used
                     </h4>
-                    <div className="flex flex-wrap gap-3">
-                      {exp.technologies.map((tech) => {
-                        const { icon: TechIcon, color: techColor } = getTechnologyIcon(tech, isDarkMode);
-                        return (
-                          <motion.span
-                            key={tech}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                            transition={{
-                              delay: index * 0.15 + exp.description.length * 0.08 + exp.technologies.indexOf(tech) * 0.05,
-                              duration: 0.3,
-                            }}
-                            whileHover={{ scale: 1.1, y: -2 }}
-                            className="px-4 py-2 text-sm rounded-lg bg-muted/80 dark:bg-slate-800/80 border border-indigo-500/30 text-foreground dark:text-slate-300 font-semibold hover:border-indigo-400/50 hover:bg-indigo-500/10 hover:text-indigo-600 dark:hover:text-indigo-300 transition-all cursor-default flex items-center gap-2"
-                          >
-                            <TechIcon className="text-base" style={{ color: techColor }} />
-                            {tech}
-                          </motion.span>
-                        );
-                      })}
-                    </div>
+
+                    <ExprienceTech exp={exp} isDarkMode={isDarkMode} />
+
+                   
+
+
                   </div>
+
                 </div>
               </MagicCard>
             </motion.div>
