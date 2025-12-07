@@ -24,13 +24,23 @@ export function Projects() {
   const isDarkMode = mounted && resolvedTheme === "dark";
 
   useEffect(() => {
+    // Fallback: Show content after a short delay if observer hasn't triggered
+    const fallbackTimer = setTimeout(() => {
+      setIsInView(true);
+    }, 500);
+
+    const isMobile = window.innerWidth < 768;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
+          clearTimeout(fallbackTimer);
         }
       },
-      { threshold: 0.1, rootMargin: "-100px" }
+      { 
+        threshold: 0.05, 
+        rootMargin: isMobile ? "-20px" : "-100px" 
+      }
     );
 
     if (ref.current) {
@@ -38,6 +48,7 @@ export function Projects() {
     }
 
     return () => {
+      clearTimeout(fallbackTimer);
       if (ref.current) {
         observer.unobserve(ref.current);
       }
