@@ -66,3 +66,8 @@ logs
 *.tmp
 *.temp
 
+# Blue-Green Deployment build folders (server-specific, not in git)
+blue-build/
+green-build/
+.active-folder
+
