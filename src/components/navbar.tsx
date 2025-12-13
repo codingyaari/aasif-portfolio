@@ -62,7 +62,7 @@ export function Navbar() {
     }
   };
 
-  //test comment for deployments
+  //test comment for deployment
 
   return (
     <motion.nav
