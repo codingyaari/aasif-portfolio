@@ -79,7 +79,16 @@ mkdir -p "$BLUE_BUILD_DIR" "$GREEN_BUILD_DIR" "$BASE_DIR/logs"
 # Step 2: Pull latest code (ONE codebase)
 echo "📥 Pulling latest code..."
 if [ -d ".git" ]; then
-    git pull origin main 
+    # Fetch latest changes
+    git fetch origin main
+    
+    # Reset to match remote exactly (discards local changes)
+    # This ensures deployment always matches the remote repository
+    echo "🔄 Resetting to match remote repository..."
+    git reset --hard origin/main
+    
+    # Alternative: If you want to merge instead of reset, use:
+    # git pull origin main --no-rebase
 else
     echo "❌ Error: No git repository found in $BASE_DIR"
     echo "   Make sure you're in the directory with your code"
