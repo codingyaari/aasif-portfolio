@@ -116,10 +116,10 @@ sudo npm run build
 # Step 8: Move .next to the build folder
 if [ -d ".next" ]; then
     echo "📦 Moving build output to $NEW_BUILD_DIR..."
-    # Remove old build in target folder if exists
-    rm -rf "$NEW_BUILD_DIR/.next"
-    # Move new buil d
-    mv .next "$NEW_BUILD_DIR/.next"
+    # Remove old build in target folder if exists (use sudo for permission)
+    sudo rm -rf "$NEW_BUILD_DIR/.next"
+    # Move new build
+    sudo mv .next "$NEW_BUILD_DIR/.next"
 else
     echo "❌ Build failed! .next folder not found."
     exit 1
@@ -134,7 +134,7 @@ if [ ! -f "$BASE_DIR/ecosystem.config.js" ]; then
 fi
 
 # Step 10: Logs directory already created in Step 1b
-`   `
+
 # Step 11: Stop current PM2 app
 echo "🛑 Stopping current PM2 app..."
 pm2 stop "$PM2_APP_NAME" 2>/dev/null || true
@@ -142,8 +142,8 @@ pm2 delete "$PM2_APP_NAME" 2>/dev/null || true
 
 # Step 12: Update symlink to point to new build
 echo "🔗 Updating symlink to new build..."
-# Remove old symlink if exists
-rm -f "$NEXT_SYMLINK"
+# Remove old symlink if exists (use sudo if needed)
+sudo rm -f "$NEXT_SYMLINK" 2>/dev/null || rm -f "$NEXT_SYMLINK"
 # Create symlink to new build
 ln -s "$NEW_BUILD_DIR/.next" "$NEXT_SYMLINK"
 echo "✅ Symlink created: .next -> $NEW_BUILD_DIR/.next"
