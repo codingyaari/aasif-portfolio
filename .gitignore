@@ -72,3 +72,4 @@ green-build/
 .active-folder
 
 .next
+.env.local
