@@ -28,3 +28,4 @@ module.exports = {
   ],
 };
 
+//using blue green deployment
