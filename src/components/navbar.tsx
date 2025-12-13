@@ -62,6 +62,8 @@ export function Navbar() {
     }
   };
 
+  //test comment for deployments
+
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
