@@ -117,16 +117,39 @@ fi
 echo "📦 Installing dependencies..."
 sudo npm install --force
 
-# Step 7: Remove .next symlink before building (Next.js can't build into a symlink)
-echo "🔗 Removing .next symlink before building..."
-sudo rm -f "$NEXT_SYMLINK" 2>/dev/null || rm -f "$NEXT_SYMLINK"
+# Step 7: Remove .next symlink or directory before building (Next.js can't build into a symlink)
+echo "🔗 Removing .next symlink/directory before building..."
+# Check if .next exists and what it is
+if [ -L "$NEXT_SYMLINK" ]; then
+    echo "   Found symlink, removing..."
+    sudo rm -f "$NEXT_SYMLINK"
+elif [ -d "$NEXT_SYMLINK" ]; then
+    echo "   Found directory, removing..."
+    sudo rm -rf "$NEXT_SYMLINK"
+elif [ -e "$NEXT_SYMLINK" ]; then
+    echo "   Found file, removing..."
+    sudo rm -f "$NEXT_SYMLINK"
+fi
+# Double check it's gone
+if [ -e "$NEXT_SYMLINK" ]; then
+    echo "⚠️  Warning: .next still exists, trying force remove..."
+    sudo rm -rf "$NEXT_SYMLINK"
+fi
+echo "✅ .next removed (ready for fresh build)"
 
-# Step 8: Build the application to the new build folder
+# Step 8: Verify .next is removed before building
+if [ -e "$NEXT_SYMLINK" ]; then
+    echo "❌ Error: .next still exists! Cannot build. Please remove it manually:"
+    echo "   sudo rm -rf $NEXT_SYMLINK"
+    exit 1
+fi
+
+# Step 9: Build the application to the new build folder
 echo "🏗️  Building application to $NEW_BUILD_DIR..."
 # Next.js builds to .next by default, so we'll build and then move it
 sudo npm run build
 
-# Step 9: Move .next to the build folder
+# Step 10: Move .next to the build folder
 if [ -d ".next" ]; then
     echo "📦 Moving build output to $NEW_BUILD_DIR..."
     # Remove old build in target folder if exists (use sudo for permission)
@@ -140,20 +163,20 @@ fi
 
 echo "✅ Build completed successfully in $NEW_BUILD_DIR!"
 
-# Step 10: Verify ecosystem.config.js exists
+# Step 11: Verify ecosystem.config.js exists
 if [ ! -f "$BASE_DIR/ecosystem.config.js" ]; then
     echo "❌ Error: ecosystem.config.js not found in $BASE_DIR"
     exit 1
 fi
 
-# Step 11: Logs directory already created in Step 1b
+# Step 12: Logs directory already created in Step 1b
 
-# Step 12: Stop current PM2 app
+# Step 13: Stop current PM2 app
 echo "🛑 Stopping current PM2 app..."
 pm2 stop "$PM2_APP_NAME" 2>/dev/null || true
 pm2 delete "$PM2_APP_NAME" 2>/dev/null || true
 
-# Step 13: Update symlink to point to new build
+# Step 14: Update symlink to point to new build
 echo "🔗 Updating symlink to new build..."
 # Remove old symlink if exists (use sudo if needed)
 sudo rm -f "$NEXT_SYMLINK" 2>/dev/null || rm -f "$NEXT_SYMLINK"
@@ -161,17 +184,17 @@ sudo rm -f "$NEXT_SYMLINK" 2>/dev/null || rm -f "$NEXT_SYMLINK"
 ln -s "$NEW_BUILD_DIR/.next" "$NEXT_SYMLINK"
 echo "✅ Symlink created: .next -> $NEW_BUILD_DIR/.next"
 
-# Step 14: Start PM2 from base directory (it will use the .next symlink)
+# Step 15: Start PM2 from base directory (it will use the .next symlink)
 # PM2 reads port and all config from ecosystem.config.js
 echo "▶️  Starting PM2 from base directory..."
 echo "   (Port and config are read from ecosystem.config.js)"
 cd "$BASE_DIR"
 pm2 start ecosystem.config.js
 
-# Step 15: Save PM2 configuration
+# Step 16: Save PM2 configuration
 pm2 save
 
-# Step 16: Update which build is now active
+# Step 17: Update which build is now active
 echo "$NEW_BUILD_NAME" > "$ACTIVE_FOLDER_FILE"
 
 echo "✅ Deployment completed!"
