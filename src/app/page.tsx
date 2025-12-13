@@ -10,11 +10,6 @@ import { Footer } from "@/components/footer";
 export default function Home() {
   return (
     <main className="min-h-screen pb-24 relative">
-      <h1>Hello aasif</h1>
-      <h1>Hello aasif</h1>
-      <h1>Hello aasif</h1>
-      <h1>Hello aasif</h1>
-      <h1>Hello aasif</h1>
       <Navbar />
       <Profile />
       <About />

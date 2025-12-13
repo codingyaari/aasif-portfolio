@@ -70,6 +70,12 @@ logs
 blue-build/
 green-build/
 .active-folder
-
 .next
+logs/
+*.log
 .env.local
+
+# PM2 logs (if created by scripts)
+pm2-error.log
+pm2-out.log
+pm2-combined.log
